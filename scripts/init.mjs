@@ -1,0 +1,25 @@
+import fs from 'node:fs';
+import crypto from 'node:crypto';
+import {Wallet,encodeRlp} from 'ethers';
+fs.mkdirSync('generated',{recursive:true});
+if(fs.existsSync('generated/network/genesis.json'))throw Error('Network already initialised. Keep existing keys; see RESET.md for deliberate reset.');
+const nodes=Array.from({length:4},()=>Wallet.createRandom());
+const names=['Admin','Manager','Auditor','Rahul','Priya'];
+const accounts=names.map(name=>({name,wallet:Wallet.createRandom()}));
+const chainId=26125;
+const extraData=encodeRlp(['0x'+'00'.repeat(32),nodes.map(n=>n.address.toLowerCase()).sort(),[],'0x',[]]);
+const genesis={config:{chainId,berlinBlock:0,londonBlock:0,zeroBaseFee:true,qbft:{blockperiodseconds:2,epochlength:30000,requesttimeoutseconds:4}},nonce:'0x0',timestamp:'0x0',gasLimit:'0x1c9c380',difficulty:'0x1',mixHash:'0x63746963616c2062797a616e74696e65206661756c7420746f6c6572616e6365',coinbase:'0x'+'00'.repeat(20),extraData,alloc:Object.fromEntries(accounts.map(a=>[a.wallet.address.toLowerCase().slice(2),{balance:'0x3635c9adc5dea00000'}]))};
+fs.mkdirSync('generated/network',{recursive:true});
+fs.writeFileSync('generated/network/genesis.json',JSON.stringify(genesis,null,2));
+const enodes=nodes.map((n,i)=>`enode://${n.signingKey.publicKey.slice(4)}@172.28.26.${11+i}:30303`);
+fs.writeFileSync('generated/network/static-nodes.json',JSON.stringify(enodes,null,2));
+fs.writeFileSync('generated/network/permissions_config.toml',`nodes-allowlist=[${enodes.map(x=>JSON.stringify(x)).join(',')}]\n`);
+for(let i=0;i<nodes.length;i++){fs.mkdirSync(`generated/network/node${i+1}`,{recursive:true});fs.writeFileSync(`generated/network/node${i+1}/key`,nodes[i].privateKey.slice(2));}
+const password=crypto.randomBytes(18).toString('base64url');
+fs.mkdirSync('generated/wallets',{recursive:true});
+for(const {name,wallet} of accounts)fs.writeFileSync(`generated/wallets/${name}.json`,await wallet.encrypt(password));
+fs.writeFileSync('generated/accounts.json',JSON.stringify(accounts.map(a=>({name:a.name,address:a.wallet.address,privateKey:a.wallet.privateKey})),null,2),{mode:0o600});
+fs.writeFileSync('generated/config.env',`POSTGRES_PASSWORD=${crypto.randomBytes(24).toString('hex')}\nAPP_DB_PASSWORD=${crypto.randomBytes(24).toString('hex')}\nFILE_KEY=${crypto.randomBytes(32).toString('hex')}\nAPP_ORIGIN=http://localhost:8080\n`,{mode:0o600});
+fs.writeFileSync('generated/WALLET-PASSWORD.txt',`LOCAL TEST NETWORK ONLY\n\nEncrypted demo wallet password: ${password}\n\nImport the matching generated/wallets/*.json through the app.\nEach wallet signs in your browser. Never reuse these accounts on public chains.\n`,{mode:0o600});
+fs.writeFileSync('generated/public-accounts.json',JSON.stringify(accounts.map(a=>({name:a.name,address:a.wallet.address})),null,2));
+console.log('Generated a new four-validator network, encrypted local wallets and application secrets. See generated/WALLET-PASSWORD.txt.');

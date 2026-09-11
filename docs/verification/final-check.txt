@@ -1,0 +1,81 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> sih26125-ledgerguard@1.0.0 check
+> npm run compile && npm run build && npm test
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> sih26125-ledgerguard@1.0.0 compile
+> node scripts/compile.mjs
+
+Contracts compiled
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> sih26125-ledgerguard@1.0.0 build
+> vite build --config web/vite.config.js
+
+vite v6.3.6 building for production...
+transforming...
+✓ 1721 modules transformed.
+rendering chunks...
+computing gzip size...
+../dist/index.html                   0.47 kB │ gzip:   0.32 kB
+../dist/assets/index-CN1jUxlh.css   11.41 kB │ gzip:   3.44 kB
+../dist/assets/index-DTrllrcB.js   571.08 kB │ gzip: 201.03 kB
+
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 2.23s
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> sih26125-ledgerguard@1.0.0 test
+> node --test --test-concurrency=1 tests/*.test.mjs
+
+This version of µWS is not compatible with your Node.js build:
+
+Error: Cannot find module '../binaries/uws_linux_x64_137.node'
+Require stack:
+- /workspace/scratch/6684349ff099/sih-prototype/node_modules/ganache/node_modules/@trufflesuite/uws-js-unofficial/src/uws.js
+- /workspace/scratch/6684349ff099/sih-prototype/node_modules/ganache/dist/node/core.js
+Falling back to a NodeJS implementation; performance may be degraded.
+
+
+✔ Forged role header grants no authority (2469.940159ms)
+✔ Signed authentication rejects replay and wrong-key proofs (43.635379ms)
+✔ Origin restrictions reject cross-origin authenticated requests (1.945654ms)
+✔ Expired challenges fail even with the correct signature (27.45967ms)
+✔ Encrypted upload, mint, ownership ACL and ciphertext tamper rejection (679.199653ms)
+✔ Previously authenticated session cannot retain a revoked audit role (282.196092ms)
+✔ Suspension and controller rotation invalidate sessions (289.891393ms)
+✔ Log chain detects altered history and anchored deletion (344.390574ms)
+✔ Rate limiting stops repeated requests with a retry interval (36.823248ms)
+This version of µWS is not compatible with your Node.js build:
+
+Error: Cannot find module '../binaries/uws_linux_x64_137.node'
+Require stack:
+- /workspace/scratch/6684349ff099/sih-prototype/node_modules/ganache/node_modules/@trufflesuite/uws-js-unofficial/src/uws.js
+- /workspace/scratch/6684349ff099/sih-prototype/node_modules/ganache/dist/node/core.js
+Falling back to a NodeJS implementation; performance may be degraded.
+
+
+✔ Admin-only mint and allocation, including Manager allocation bypass (1329.464447ms)
+✔ User and Auditor cannot transfer; Manager transfer succeeds (414.957492ms)
+✔ ERC721 approvals and safe-transfer path cannot bypass policy (290.183146ms)
+✔ Revocation takes effect after previously successful authority (534.406763ms)
+✔ Duplicate code registration fails (145.234826ms)
+✔ Time-limited file access expires and transfer invalidates grants (626.942424ms)
+✔ Pause and suspension block operations; governance survives pause (589.668555ms)
+✔ Rotation preserves DID ownership and invalidates old controller (319.273665ms)
+✔ Guardian recovery requires delay; current controller can cancel (188.07922ms)
+✔ Final Admin cannot be demoted, suspended or self-deactivated (66.120265ms)
+✔ Retirement permanently blocks transfers and downloads (352.89951ms)
+ℹ tests 20
+ℹ suites 0
+ℹ pass 20
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 13423.023653

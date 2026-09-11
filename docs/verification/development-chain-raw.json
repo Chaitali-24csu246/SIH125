@@ -1,0 +1,252 @@
+[
+  {
+    "experiment": "minedRejection",
+    "transactionHash": "0xe2269f5f6ca97643a60baaf3aaeae33d9f0ced8aae5812ee664a9b225f46e8e3",
+    "blockNumber": 29,
+    "status": 0
+  },
+  {
+    "experiment": "statefulSequences",
+    "seed": 26125,
+    "sequence": [
+      {
+        "step": 0,
+        "op": "transfer",
+        "actor": 3,
+        "allowed": false,
+        "owner": "0x6bDeEdCaa641dE333d933c92dE4EB9f6154a821C"
+      },
+      {
+        "step": 1,
+        "op": "pause",
+        "paused": true
+      },
+      {
+        "step": 2,
+        "op": "pause",
+        "paused": false
+      },
+      {
+        "step": 3,
+        "op": "transfer",
+        "actor": 3,
+        "allowed": false,
+        "owner": "0x6bDeEdCaa641dE333d933c92dE4EB9f6154a821C"
+      },
+      {
+        "step": 4,
+        "op": "transfer",
+        "actor": 1,
+        "allowed": true,
+        "owner": "0x5bF92bf0ca0D56252b8d5Db97937B33EB712dEfa"
+      },
+      {
+        "step": 5,
+        "op": "pause",
+        "paused": true
+      },
+      {
+        "step": 6,
+        "op": "transfer",
+        "actor": 1,
+        "allowed": false,
+        "owner": "0x5bF92bf0ca0D56252b8d5Db97937B33EB712dEfa"
+      },
+      {
+        "step": 7,
+        "op": "transfer",
+        "actor": 1,
+        "allowed": false,
+        "owner": "0x5bF92bf0ca0D56252b8d5Db97937B33EB712dEfa"
+      },
+      {
+        "step": 8,
+        "op": "pause",
+        "paused": false
+      },
+      {
+        "step": 9,
+        "op": "transfer",
+        "actor": 3,
+        "allowed": false,
+        "owner": "0x5bF92bf0ca0D56252b8d5Db97937B33EB712dEfa"
+      },
+      {
+        "step": 10,
+        "op": "pause",
+        "paused": true
+      },
+      {
+        "step": 11,
+        "op": "manager-role",
+        "managerAllowed": false
+      },
+      {
+        "step": 12,
+        "op": "transfer",
+        "actor": 1,
+        "allowed": false,
+        "owner": "0x5bF92bf0ca0D56252b8d5Db97937B33EB712dEfa"
+      },
+      {
+        "step": 13,
+        "op": "pause",
+        "paused": false
+      },
+      {
+        "step": 14,
+        "op": "manager-role",
+        "managerAllowed": true
+      },
+      {
+        "step": 15,
+        "op": "pause",
+        "paused": true
+      },
+      {
+        "step": 16,
+        "op": "transfer",
+        "actor": 1,
+        "allowed": false,
+        "owner": "0x5bF92bf0ca0D56252b8d5Db97937B33EB712dEfa"
+      },
+      {
+        "step": 17,
+        "op": "manager-role",
+        "managerAllowed": false
+      },
+      {
+        "step": 18,
+        "op": "manager-role",
+        "managerAllowed": true
+      },
+      {
+        "step": 19,
+        "op": "pause",
+        "paused": false
+      },
+      {
+        "step": 20,
+        "op": "pause",
+        "paused": true
+      },
+      {
+        "step": 21,
+        "op": "transfer",
+        "actor": 3,
+        "allowed": false,
+        "owner": "0x5bF92bf0ca0D56252b8d5Db97937B33EB712dEfa"
+      },
+      {
+        "step": 22,
+        "op": "transfer",
+        "actor": 3,
+        "allowed": false,
+        "owner": "0x5bF92bf0ca0D56252b8d5Db97937B33EB712dEfa"
+      },
+      {
+        "step": 23,
+        "op": "transfer",
+        "actor": 3,
+        "allowed": false,
+        "owner": "0x5bF92bf0ca0D56252b8d5Db97937B33EB712dEfa"
+      },
+      {
+        "step": 24,
+        "op": "transfer",
+        "actor": 1,
+        "allowed": false,
+        "owner": "0x5bF92bf0ca0D56252b8d5Db97937B33EB712dEfa"
+      },
+      {
+        "step": 25,
+        "op": "pause",
+        "paused": false
+      },
+      {
+        "step": 26,
+        "op": "transfer",
+        "actor": 3,
+        "allowed": false,
+        "owner": "0x5bF92bf0ca0D56252b8d5Db97937B33EB712dEfa"
+      },
+      {
+        "step": 27,
+        "op": "transfer",
+        "actor": 3,
+        "allowed": false,
+        "owner": "0x5bF92bf0ca0D56252b8d5Db97937B33EB712dEfa"
+      },
+      {
+        "step": 28,
+        "op": "manager-role",
+        "managerAllowed": false
+      },
+      {
+        "step": 29,
+        "op": "manager-role",
+        "managerAllowed": true
+      },
+      {
+        "step": 30,
+        "op": "pause",
+        "paused": true
+      },
+      {
+        "step": 31,
+        "op": "manager-role",
+        "managerAllowed": false
+      },
+      {
+        "step": 32,
+        "op": "transfer",
+        "actor": 3,
+        "allowed": false,
+        "owner": "0x5bF92bf0ca0D56252b8d5Db97937B33EB712dEfa"
+      },
+      {
+        "step": 33,
+        "op": "manager-role",
+        "managerAllowed": true
+      },
+      {
+        "step": 34,
+        "op": "pause",
+        "paused": false
+      },
+      {
+        "step": 35,
+        "op": "pause",
+        "paused": true
+      },
+      {
+        "step": 36,
+        "op": "manager-role",
+        "managerAllowed": false
+      },
+      {
+        "step": 37,
+        "op": "transfer",
+        "actor": 1,
+        "allowed": false,
+        "owner": "0x5bF92bf0ca0D56252b8d5Db97937B33EB712dEfa"
+      },
+      {
+        "step": 38,
+        "op": "transfer",
+        "actor": 1,
+        "allowed": false,
+        "owner": "0x5bF92bf0ca0D56252b8d5Db97937B33EB712dEfa"
+      },
+      {
+        "step": 39,
+        "op": "transfer",
+        "actor": 3,
+        "allowed": false,
+        "owner": "0x5bF92bf0ca0D56252b8d5Db97937B33EB712dEfa"
+      }
+    ],
+    "allowedCount": 1,
+    "deniedCount": 17
+  }
+]

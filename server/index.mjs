@@ -1,0 +1,15 @@
+import fs from 'node:fs';
+import pg from 'pg';
+import {JsonRpcProvider} from 'ethers';
+import {createApp} from './app.mjs';
+const config=JSON.parse(fs.readFileSync('generated/deployment.json'));
+const artifacts=JSON.parse(fs.readFileSync('generated/artifacts.json'));
+const key=process.env.FILE_KEY;if(!/^[a-f0-9]{64}$/i.test(key||''))throw Error('Set FILE_KEY to a 32-byte hex encryption key');
+const pool=new pg.Pool({connectionString:process.env.DATABASE_URL,max:10});
+const provider=new JsonRpcProvider(process.env.RPC_URL||'http://localhost:8545',undefined,{cacheTimeout:-1});
+if(Number((await provider.getNetwork()).chainId)!==config.chainId)throw Error('Wrong blockchain chain ID');
+for(const address of [config.registry,config.platform])if(await provider.getCode(address)==='0x')throw Error('Contract missing: rerun deployment against this chain');
+const {app}=await createApp({pool,provider,deployment:config,artifacts,encryptionKey:Buffer.from(key,'hex'),origin:process.env.APP_ORIGIN||'http://localhost:8080',nodeUrls:(process.env.NODE_URLS||'').split(',').filter(Boolean)});
+const server=app.listen(Number(process.env.PORT||8080),'0.0.0.0',()=>console.log('LedgerGuard running on port '+(process.env.PORT||8080)));
+const cleanup=setInterval(()=>{pool.query('DELETE FROM challenges WHERE expires_at < now()').catch(console.error);pool.query('DELETE FROM sessions WHERE expires_at < now()').catch(console.error);pool.query('DELETE FROM rate_limits WHERE expires_at < now()').catch(console.error);},60000).unref();
+process.on('SIGTERM',()=>{clearInterval(cleanup);server.close(async()=>{await pool.end();process.exit(0);});});

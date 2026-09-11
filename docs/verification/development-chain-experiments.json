@@ -1,0 +1,80 @@
+{
+  "title": "Security and state-transition validation",
+  "runId": "798c203c-e409-414b-b8cd-e65d542601db",
+  "environment": {
+    "timestamp": "2026-09-10T16:12:38.042Z",
+    "node": "v24.19.0",
+    "platform": "linux",
+    "cpu": "AMD EPYC 9V74 80-Core Processor",
+    "memoryGiB": 16,
+    "chainId": 26125,
+    "rpcClient": "Ganache/v7.9.2/EthereumJS TestRPC/v7.9.2/ethereum-js",
+    "seed": 26125,
+    "methodology": "Local-only controlled tests. Contract attacks use isolated contracts. API tests use synthetic assets. Rejected preflight calls are not labelled mined transactions. Timing is this machine and workload only.",
+    "research": "Sequence-based testing inspired by SmartFuzz (2025); this runner does not implement its LLM algorithm.",
+    "omittedExperiments": [
+      "PostgreSQL tamper and read-latency tests: DATABASE_URL missing or synthetic asset creation failed"
+    ],
+    "isolatedContracts": {
+      "registry": "0x1A7fc64C9AB9919DF6cc09fa4824f08f11fcBC31",
+      "platform": "0xD1526Ca74FbA95aEc4871e2119D02B05174b58cA"
+    }
+  },
+  "tests": [
+    {
+      "name": "API rejects caller-supplied Admin role",
+      "passed": true,
+      "details": "Unauthenticated request: 401; authenticated User: 403",
+      "durationMs": 31.608670000000075
+    },
+    {
+      "name": "Signed challenge is single-use",
+      "passed": true,
+      "details": "Reusing the valid signature after login returned 401",
+      "durationMs": 4.650295999999798
+    },
+    {
+      "name": "Wrong controller signature is rejected",
+      "passed": true,
+      "details": "Expected property held",
+      "durationMs": 16.082634999999755
+    },
+    {
+      "name": "Encrypted document ownership and download enforcement",
+      "passed": true,
+      "details": "Synthetic token #1: Manager denied, owner receives exact bytes",
+      "durationMs": 558.7493789999999
+    },
+    {
+      "name": "Contract rejects mint, allocation and role escalation",
+      "passed": true,
+      "details": "Three direct contract preflight calls rejected",
+      "durationMs": 65.20170000000053
+    },
+    {
+      "name": "Mined unauthorised transfer fails without ownership change",
+      "passed": true,
+      "details": "Mined status 0: 0xe2269f5f6ca97643a60baaf3aaeae33d9f0ced8aae5812ee664a9b225f46e8e3",
+      "durationMs": 96.91536400000041
+    },
+    {
+      "name": "Sequence-based permission model holds across 40 seeded transitions",
+      "passed": true,
+      "details": "40 reproducible transitions; 1 successful and 17 denied transfers, owner invariants checked",
+      "durationMs": 3619.215063999999
+    },
+    {
+      "name": "Approval paths cannot bypass transfer policy",
+      "passed": true,
+      "details": "Expected property held",
+      "durationMs": 27.858855000000403
+    },
+    {
+      "name": "Revoked file access is denied while ownership remains",
+      "passed": true,
+      "details": "Expected property held",
+      "durationMs": 318.7706569999991
+    }
+  ],
+  "measurements": {}
+}

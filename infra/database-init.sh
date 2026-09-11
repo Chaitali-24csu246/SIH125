@@ -1,0 +1,8 @@
+#!/bin/sh
+set -eu
+psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" --set=app_password="$APP_DB_PASSWORD" <<'SQL'
+CREATE ROLE ledger LOGIN PASSWORD :'app_password' NOSUPERUSER NOCREATEDB NOCREATEROLE;
+REVOKE CREATE ON SCHEMA public FROM PUBLIC;
+GRANT CONNECT ON DATABASE ledgerguard TO ledger;
+GRANT USAGE, CREATE ON SCHEMA public TO ledger;
+SQL

@@ -1,0 +1,51 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> sih26125-ledgerguard@1.0.0 test
+> node --test --test-concurrency=1 tests/*.test.mjs
+
+This version of µWS is not compatible with your Node.js build:
+
+Error: Cannot find module '../binaries/uws_linux_x64_137.node'
+Require stack:
+- /workspace/scratch/6684349ff099/sih-prototype/node_modules/ganache/node_modules/@trufflesuite/uws-js-unofficial/src/uws.js
+- /workspace/scratch/6684349ff099/sih-prototype/node_modules/ganache/dist/node/core.js
+Falling back to a NodeJS implementation; performance may be degraded.
+
+
+✔ Forged role header grants no authority (2490.971246ms)
+✔ Signed authentication rejects replay and wrong-key proofs (55.968685ms)
+✔ Origin restrictions reject cross-origin authenticated requests (15.068674ms)
+✔ Expired challenges fail even with the correct signature (9.248635ms)
+✔ Encrypted upload, mint, ownership ACL and ciphertext tamper rejection (636.903577ms)
+✔ Previously authenticated session cannot retain a revoked audit role (311.318022ms)
+✔ Suspension and controller rotation invalidate sessions (270.296806ms)
+✔ Log chain detects altered history and anchored deletion (189.993081ms)
+✔ Rate limiting stops repeated requests with a retry interval (17.160299ms)
+This version of µWS is not compatible with your Node.js build:
+
+Error: Cannot find module '../binaries/uws_linux_x64_137.node'
+Require stack:
+- /workspace/scratch/6684349ff099/sih-prototype/node_modules/ganache/node_modules/@trufflesuite/uws-js-unofficial/src/uws.js
+- /workspace/scratch/6684349ff099/sih-prototype/node_modules/ganache/dist/node/core.js
+Falling back to a NodeJS implementation; performance may be degraded.
+
+
+✔ Admin-only mint and allocation, including Manager allocation bypass (1425.624828ms)
+✔ User and Auditor cannot transfer; Manager transfer succeeds (388.959048ms)
+✔ ERC721 approvals and safe-transfer path cannot bypass policy (283.278858ms)
+✔ Revocation takes effect after previously successful authority (547.868193ms)
+✔ Duplicate code registration fails (147.825221ms)
+✔ Time-limited file access expires and transfer invalidates grants (594.304046ms)
+✔ Pause and suspension block operations; governance survives pause (626.381822ms)
+✔ Rotation preserves DID ownership and invalidates old controller (304.998449ms)
+✔ Guardian recovery requires delay; current controller can cancel (198.631617ms)
+✔ Final Admin cannot be demoted, suspended or self-deactivated (68.461392ms)
+✔ Retirement permanently blocks transfers and downloads (348.246886ms)
+ℹ tests 20
+ℹ suites 0
+ℹ pass 20
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 13319.802063

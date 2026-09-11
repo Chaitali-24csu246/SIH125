@@ -1,0 +1,73 @@
+name: ledgerguard
+x-besu: &besu
+  image: hyperledger/besu:25.7.0
+  user: "1000:1000"
+  entrypoint: ["/bin/sh", "/start-besu.sh"]
+  restart: unless-stopped
+  depends_on:
+    volume-init: {condition: service_completed_successfully}
+  environment: {JAVA_OPTS: "-Xms256m -Xmx768m"}
+  networks: [ledger]
+services:
+  tools:
+    profiles: [tools]
+    user: "${LOCAL_UID:-1000}:${LOCAL_GID:-1000}"
+    build: {context: ., dockerfile: Dockerfile.tools}
+    volumes: ["./generated:/app/generated", "./experiments/results:/app/experiments/results"]
+    environment:
+      RPC_URL: http://besu1:8545
+      API_URL: http://app:8080
+      DATABASE_URL: postgresql://ledger:${APP_DB_PASSWORD:-not-initialised}@postgres:5432/ledgerguard
+    networks: [ledger]
+  volume-init:
+    image: alpine:3.21
+    command: ["sh", "-c", "chown -R 1000:1000 /n1 /n2 /n3 /n4"]
+    volumes: ["node1:/n1", "node2:/n2", "node3:/n3", "node4:/n4"]
+    networks: [ledger]
+  besu1:
+    <<: *besu
+    environment: {NODE_NUMBER: "1", JAVA_OPTS: "-Xms256m -Xmx768m"}
+    volumes: ["node1:/var/lib/besu", "./generated/network:/config:ro", "./infra/start-besu.sh:/start-besu.sh:ro"]
+    ports: ["127.0.0.1:8545:8545"]
+    networks: {ledger: {ipv4_address: 172.28.26.11}}
+  besu2:
+    <<: *besu
+    environment: {NODE_NUMBER: "2", JAVA_OPTS: "-Xms256m -Xmx768m"}
+    volumes: ["node2:/var/lib/besu", "./generated/network:/config:ro", "./infra/start-besu.sh:/start-besu.sh:ro"]
+    networks: {ledger: {ipv4_address: 172.28.26.12}}
+  besu3:
+    <<: *besu
+    environment: {NODE_NUMBER: "3", JAVA_OPTS: "-Xms256m -Xmx768m"}
+    volumes: ["node3:/var/lib/besu", "./generated/network:/config:ro", "./infra/start-besu.sh:/start-besu.sh:ro"]
+    networks: {ledger: {ipv4_address: 172.28.26.13}}
+  besu4:
+    <<: *besu
+    environment: {NODE_NUMBER: "4", JAVA_OPTS: "-Xms256m -Xmx768m"}
+    volumes: ["node4:/var/lib/besu", "./generated/network:/config:ro", "./infra/start-besu.sh:/start-besu.sh:ro"]
+    networks: {ledger: {ipv4_address: 172.28.26.14}}
+  postgres:
+    image: postgres:17.6-alpine
+    environment: {POSTGRES_DB: ledgerguard, POSTGRES_USER: ledger_owner, POSTGRES_PASSWORD: "${POSTGRES_PASSWORD:-not-initialised}", APP_DB_PASSWORD: "${APP_DB_PASSWORD:-not-initialised}"}
+    volumes: ["postgres:/var/lib/postgresql/data", "./infra/database-init.sh:/docker-entrypoint-initdb.d/01-roles.sh:ro"]
+    healthcheck: {test: ["CMD-SHELL", "pg_isready -U ledger_owner -d ledgerguard"], interval: 5s, timeout: 3s, retries: 20}
+    restart: unless-stopped
+    networks: [ledger]
+  app:
+    build: .
+    environment:
+      DATABASE_URL: postgresql://ledger:${APP_DB_PASSWORD:-not-initialised}@postgres:5432/ledgerguard
+      FILE_KEY: ${FILE_KEY:-missing}
+      RPC_URL: http://besu1:8545
+      NODE_URLS: http://besu1:8545,http://besu2:8545,http://besu3:8545,http://besu4:8545
+      APP_ORIGIN: ${APP_ORIGIN:-http://localhost:8080}
+    volumes:
+      - ./generated/deployment.json:/app/generated/deployment.json:ro
+      - ./generated/artifacts.json:/app/generated/artifacts.json:ro
+    ports: ["127.0.0.1:8080:8080"]
+    depends_on: {postgres: {condition: service_healthy}, besu1: {condition: service_started}}
+    restart: unless-stopped
+    networks: [ledger]
+networks:
+  ledger:
+    ipam: {config: [{subnet: 172.28.26.0/24}]}
+volumes: {node1: {}, node2: {}, node3: {}, node4: {}, postgres: {}}

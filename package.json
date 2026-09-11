@@ -1,0 +1,36 @@
+{
+  "name": "sih26125-ledgerguard",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "compile": "node scripts/compile.mjs",
+    "build": "vite build --config web/vite.config.js",
+    "dev": "vite --config web/vite.config.js",
+    "start": "node server/index.mjs",
+    "init": "node scripts/init.mjs",
+    "deploy": "node scripts/deploy.mjs",
+    "test": "node --test --test-concurrency=1 tests/*.test.mjs",
+    "experiments": "node experiments/run.mjs",
+    "check": "npm run compile && npm run build && npm test"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "5.4.0",
+    "ethers": "6.17.0",
+    "express": "5.1.0",
+    "helmet": "8.1.0",
+    "lucide-react": "0.468.0",
+    "pg": "8.16.3",
+    "react": "19.1.1",
+    "react-dom": "19.1.1",
+    "zod": "3.25.76"
+  },
+  "devDependencies": {
+    "@electric-sql/pglite": "0.3.7",
+    "ganache": "7.9.2",
+    "pg-mem": "3.0.5",
+    "solc": "0.8.30",
+    "supertest": "7.1.4",
+    "vite": "6.3.6"
+  }
+}
